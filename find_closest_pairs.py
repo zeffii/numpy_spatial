@@ -15,29 +15,13 @@ verts = [
 
 def make_combos(nsize):
     """
-    big O = ((O**2)/2) - O
-
     finds all unique pairs of index combinations
-    input  num = 5
-    output = [[0 1] [0 2] [0 3] [0 4] [1 2] [1 3] [1 4] [2 3] [2 4] [3 4]]
-
-    or
-        B1 = np.arange(start=1, stop=nsize)
-        B1_TILE = np.tile(B1, (nsize, 1))
-        B1_UPPER_TRIANGLE = np.triu(B1_TILE, k=0)
-        B1_COMBOS = np.argwhere(B1_UPPER_TRIANGLE > 0) + [0, 1]
-
-    or
-        A1, B1 = np.triu_indices(4, 0)
-        COMBOS = np.ravel(np.column_stack((A1, B1))).reshape((-1, 2)) + [0, 1]
+      input  num = 5
+      output = [[0 1] [0 2] [0 3] [0 4] [1 2] [1 3] [1 4] [2 3] [2 4] [3 4]]
     """
-    nsize_sq = nsize * nsize
-    full_m = np.triu(np.ones(nsize_sq, dtype=np.int).reshape(-1, nsize))
-    upper_m = full_m - np.identity(nsize, dtype=np.int)
-    return np.transpose(np.nonzero(upper_m))
-
-
-
+    A1, B1 = np.triu_indices(nsize-1, 0)
+    COMBOS = np.ravel(np.column_stack((A1, B1))).reshape((-1, 2)) + [0, 1]
+    return COMBOS
 
 def find_distances(VERTS, combos):
     """
